@@ -27,24 +27,24 @@ function playGame() {
     let playerScore = 0;
     let computerScore = 0;
 
-    for (let round = 0; round < 5; round++) {
-        const playerSelection = prompt("Rock, Paper or Scissors");
-        const computerSelection = getComputerChoice();
+    // for (let round = 0; round < 5; round++) {
+    //     const playerSelection = prompt("Rock, Paper or Scissors");
+    //     const computerSelection = getComputerChoice();
 
-        console.log("ROUND: " + (round + 1));
-        console.log(playerSelection);
-        console.log(computerSelection);
+    //     console.log("ROUND: " + (round + 1));
+    //     console.log(playerSelection);
+    //     console.log(computerSelection);
 
-        const result = playRound(playerSelection, computerSelection);
-        console.log(result);
+    //     const result = playRound(playerSelection, computerSelection);
+    //     console.log(result);
 
-        if (!result.includes("Tie")) {
-            result.includes("Win") ? playerScore++ : computerScore++;
-        }
+    //     if (!result.includes("Tie")) {
+    //         result.includes("Win") ? playerScore++ : computerScore++;
+    //     }
 
-        console.log("Player Score: " + playerScore);
-        console.log("Computer Score: " + computerScore);
-    }
+    //     console.log("Player Score: " + playerScore);
+    //     console.log("Computer Score: " + computerScore);
+    // }
 
     if (playerScore > computerScore) {
         console.log("PLAYER WINS!");
