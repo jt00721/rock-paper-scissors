@@ -39,6 +39,7 @@ function playGame() {
     const roundDiv = document.createElement('div');
     const roundLabel = document.createElement('h2');
     const buttonsContainer = document.createElement('div');
+    const playAgainButton = document.createElement('button');
     const resultsDiv = document.createElement('div');
     const computerScoreDiv = document.createElement('div');
     const playerScoreDiv = document.createElement('div');
@@ -54,6 +55,7 @@ function playGame() {
     displayDiv.appendChild(roundWinnerLabel);
     displayDiv.appendChild(resultsDiv);
     displayDiv.appendChild(buttonsContainer);
+    displayDiv.appendChild(playAgainButton);
     resultsDiv.appendChild(playerScoreDiv);
     resultsDiv.appendChild(computerScoreDiv);
     roundDiv.appendChild(roundLabel);
@@ -71,6 +73,8 @@ function playGame() {
 
     currentPlayerScore.textContent = playerScore;
     currentComputerScore.textContent = computerScore;
+
+    playAgainButton.textContent = "Play Again";
 
     body.setAttribute('style', 'background-color: #656565; display: flex; justify-content: center; align-items: center; height: 800px;');
     resultsDiv.setAttribute('style', 'width: 700px; height: 150px; background-color: #A6D3A0; display: flex; justify-content: space-around; align-items: center; border-radius: 15px 15px 0px 0px;');
@@ -98,6 +102,18 @@ function playGame() {
         button.setAttribute('style', 'width: 200px; padding: 8px 16px; font-weight: bold; color: #FFFFFF; background-color: #A6D3A0; border: 3px solid #FFFFFF; border-radius: 10px; box-shadow: inset 5px 5px 5px #D1FFD7;');
     });
 
+    playAgainButton.setAttribute('style', 'width: 200px; margin: 20px 0; padding: 8px 16px; font-weight: bold; color: #FFFFFF; background-color: #A6D3A0; border: 3px solid #FFFFFF; border-radius: 10px; box-shadow: inset 5px 5px 5px #D1FFD7;');
+    playAgainButton.hidden = true;
+
+    playAgainButton.addEventListener('click', function () {
+        resetScore();
+        playAgainButton.hidden = true;
+        enableButtons();
+        playerScoreDiv.style['background-color'] = '';
+        computerScoreDiv.style['background-color'] = '';
+        roundWinnerLabel.textContent = "";
+    });
+
     function handleButtonClick(userChoice) {
         round++;
         result = playRound(userChoice, getComputerChoice());
@@ -108,6 +124,7 @@ function playGame() {
         if (round === 5) {
             disableButtons();
             checkWinner();
+            playAgainButton.hidden = false;
         }
     }
 
@@ -142,6 +159,14 @@ function playGame() {
         }
     }
 
+    function resetScore() {
+        playerScore = 0;
+        computerScore = 0;
+        round = 0;
+        roundLabel.textContent = `Round: ${round}`;
+        currentPlayerScore.textContent = playerScore;
+        currentComputerScore.textContent = computerScore;
+    }
 }
 
 playGame();
