@@ -30,22 +30,62 @@ function playRound(playerSelection, computerSelection) {
 function playGame() {
     let playerScore = 0;
     let computerScore = 0;
+    let round = 0;
+    let result;
 
     const body = document.querySelector('body');
     const gameTitle = document.createElement('h1');
     const displayDiv = document.createElement('div');
+    const roundDiv = document.createElement('div');
+    const roundLabel = document.createElement('h2');
     const buttonsContainer = document.createElement('div');
+    const resultsDiv = document.createElement('div');
+    const computerScoreDiv = document.createElement('div');
+    const playerScoreDiv = document.createElement('div');
+    const playerScoreLabel = document.createElement('h2');
+    const computerScoreLabel = document.createElement('h2');
+    const currentPlayerScore = document.createElement('h2');
+    const currentComputerScore = document.createElement('h2');
+    const roundWinnerLabel = document.createElement('h3');
 
     body.appendChild(displayDiv);
     displayDiv.appendChild(gameTitle);
+    displayDiv.appendChild(roundDiv);
+    displayDiv.appendChild(roundWinnerLabel);
+    displayDiv.appendChild(resultsDiv);
     displayDiv.appendChild(buttonsContainer);
+    resultsDiv.appendChild(playerScoreDiv);
+    resultsDiv.appendChild(computerScoreDiv);
+    roundDiv.appendChild(roundLabel);
+    playerScoreDiv.appendChild(playerScoreLabel);
+    computerScoreDiv.appendChild(computerScoreLabel);
+    playerScoreDiv.appendChild(currentPlayerScore);
+    computerScoreDiv.appendChild(currentComputerScore);
 
     gameTitle.textContent = "ROCK-PAPER-SCISSORS";
 
+    roundLabel.textContent = `Round: ${round}`;
+    roundWinnerLabel.textContent = result;
+    playerScoreLabel.textContent = "Player Score";
+    computerScoreLabel.textContent = "Computer Score";
+
+    currentPlayerScore.textContent = playerScore;
+    currentComputerScore.textContent = computerScore;
+
     body.setAttribute('style', 'background-color: #656565; display: flex; justify-content: center; align-items: center; height: 800px;');
+    resultsDiv.setAttribute('style', 'width: 700px; height: 150px; background-color: #A6D3A0; display: flex; justify-content: space-around; align-items: center; border-radius: 15px 15px 0px 0px;');
+    playerScoreDiv.setAttribute('style', 'width: 300px; height: 100px; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; border: 3px solid #FFFFFF; border-radius: 15px 0px 0px 0px;')
+    computerScoreDiv.setAttribute('style', 'width: 300px; height: 100px; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; border: 3px solid #FFFFFF; border-radius: 0px 15px 0px 0px;')
     displayDiv.setAttribute('style', 'text-align: center;')
 
     gameTitle.setAttribute('style', 'font-family: sans-serif; color: #FFFFFF;');
+    roundLabel.setAttribute('style', 'font-family: sans-serif; color: #FFFFFF');
+    roundWinnerLabel.setAttribute('style', 'font-family: sans-serif; color: #FFFFFF');
+    playerScoreLabel.setAttribute('style', 'margin: 0; font-family: sans-serif;');
+    computerScoreLabel.setAttribute('style', 'margin: 0; font-family: sans-serif;');
+    currentPlayerScore.setAttribute('style', 'margin: 0; font-family: sans-serif;');
+    currentComputerScore.setAttribute('style', 'margin: 0; font-family: sans-serif;');
+
     buttonsContainer.setAttribute('style', 'width: 700px; height: 100px; background-color: #808782; display: flex; justify-content: center; align-items: center; gap: 20px; border-radius: 0px 0px 15px 15px;');
 
     const buttonsList = ['rock', 'paper', 'scissors'];
@@ -59,19 +99,34 @@ function playGame() {
     });
 
     function handleButtonClick(userChoice) {
+        round++;
         result = playRound(userChoice, getComputerChoice());
         if (!result.includes("Tie")) {
             result.includes("Win") ? playerScore++ : computerScore++;
         }
-        console.log(result);
+        updateUI();
+        if (round === 5) {
+            checkWinner();
+        }
     }
 
-    if (playerScore > computerScore) {
-        console.log("PLAYER WINS!");
-    } else if (playerScore < computerScore) {
-        console.log("COMPUTER WINS!");
-    } else {
-        console.log("IT'S A TIE!");
+    function updateUI() {
+        roundLabel.textContent = `Round: ${round}`;
+        roundWinnerLabel.textContent = result;
+        currentPlayerScore.textContent = playerScore;
+        currentComputerScore.textContent = computerScore;
+    }
+
+    function checkWinner() {
+        if (playerScore > computerScore) {
+            roundWinnerLabel.textContent = "PLAYER WINS!";
+            playerScoreDiv.style['background-color'] = '#ABC8C7';
+        } else if (playerScore < computerScore) {
+            roundWinnerLabel.textContent = "COMPUTER WINS!";
+            computerScoreDiv.style['background-color'] = '#ABC8C7';
+        } else {
+            roundWinnerLabel.textContent = "IT'S A TIE!";
+        }
     }
 
 }
