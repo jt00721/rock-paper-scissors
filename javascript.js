@@ -3,6 +3,10 @@ function getComputerChoice() {
     return choices[Math.floor(Math.random() * 3)];
 }
 
+function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 function playRound(playerSelection, computerSelection) {
     const playerSelectionLower = playerSelection.toLowerCase();
     const isTie = playerSelectionLower === computerSelection.toLowerCase();
@@ -27,24 +31,40 @@ function playGame() {
     let playerScore = 0;
     let computerScore = 0;
 
-    // for (let round = 0; round < 5; round++) {
-    //     const playerSelection = prompt("Rock, Paper or Scissors");
-    //     const computerSelection = getComputerChoice();
+    const body = document.querySelector('body');
+    const gameTitle = document.createElement('h1');
+    const displayDiv = document.createElement('div');
+    const buttonsContainer = document.createElement('div');
 
-    //     console.log("ROUND: " + (round + 1));
-    //     console.log(playerSelection);
-    //     console.log(computerSelection);
+    body.appendChild(displayDiv);
+    displayDiv.appendChild(gameTitle);
+    displayDiv.appendChild(buttonsContainer);
 
-    //     const result = playRound(playerSelection, computerSelection);
-    //     console.log(result);
+    gameTitle.textContent = "ROCK-PAPER-SCISSORS";
 
-    //     if (!result.includes("Tie")) {
-    //         result.includes("Win") ? playerScore++ : computerScore++;
-    //     }
+    body.setAttribute('style', 'background-color: #656565; display: flex; justify-content: center; align-items: center; height: 800px;');
+    displayDiv.setAttribute('style', 'text-align: center;')
 
-    //     console.log("Player Score: " + playerScore);
-    //     console.log("Computer Score: " + computerScore);
-    // }
+    gameTitle.setAttribute('style', 'font-family: sans-serif; color: #FFFFFF;');
+    buttonsContainer.setAttribute('style', 'width: 700px; height: 100px; background-color: #808782; display: flex; justify-content: center; align-items: center; gap: 20px; border-radius: 0px 0px 15px 15px;');
+
+    const buttonsList = ['rock', 'paper', 'scissors'];
+    buttonsList.forEach((choice) => {
+        const button = document.createElement('button');
+        button.textContent = capitalizeFirstLetter(choice);
+        button.dataset.choice = choice;
+        button.addEventListener('click', () => handleButtonClick(choice));
+        buttonsContainer.appendChild(button);
+        button.setAttribute('style', 'width: 200px; padding: 8px 16px; font-weight: bold; color: #FFFFFF; background-color: #A6D3A0; border: 3px solid #FFFFFF; border-radius: 10px; box-shadow: inset 5px 5px 5px #D1FFD7;');
+    });
+
+    function handleButtonClick(userChoice) {
+        result = playRound(userChoice, getComputerChoice());
+        if (!result.includes("Tie")) {
+            result.includes("Win") ? playerScore++ : computerScore++;
+        }
+        console.log(result);
+    }
 
     if (playerScore > computerScore) {
         console.log("PLAYER WINS!");
@@ -54,10 +74,6 @@ function playGame() {
         console.log("IT'S A TIE!");
     }
 
-    const playAgain = prompt("Play Again?");
-    if (playAgain.toLowerCase() === "yes") {
-        playGame();
-    }
 }
 
 playGame();
