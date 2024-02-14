@@ -106,6 +106,7 @@ function playGame() {
         }
         updateUI();
         if (round === 5) {
+            disableButtons();
             checkWinner();
         }
     }
@@ -115,6 +116,18 @@ function playGame() {
         roundWinnerLabel.textContent = result;
         currentPlayerScore.textContent = playerScore;
         currentComputerScore.textContent = computerScore;
+    }
+
+    function disableButtons() {
+        buttonsList.forEach((choice) => {
+            document.querySelector(`button[data-choice="${choice}"]`).disabled = true;
+        });
+    }
+
+    function enableButtons() {
+        buttonsList.forEach((choice) => {
+            document.querySelector(`button[data-choice="${choice}"]`).disabled = false;
+        });
     }
 
     function checkWinner() {
